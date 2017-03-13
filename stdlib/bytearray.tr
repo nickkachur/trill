@@ -68,7 +68,7 @@ indirect type ByteArray {
     self.insert(string, length: strlen(string) as Int, at: index)
   }
   mutating func insert(_ string: *Int8, length: Int, at index: Int) {
-    var length = length
+    let length = length
     var index = index
     self._boundsCheck(index)
     self.length += length
