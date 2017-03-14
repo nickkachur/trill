@@ -62,6 +62,9 @@ type String {
     mutating func insert(_ string: String, at index: Int) {
         self.insert(string.cString, length: string.length, at: index)
     }
+    mutating func remove(at index: Int) {
+        self._storage.remove(at: index)
+    }
     func copy() -> String {
         return String(_storage: self._storage.copy())
     }
@@ -90,8 +93,14 @@ type String {
         }
         return true
     }
-    func mergeSorted() -> String {
-        return String(_storage: self._storage.mergeSorted())
+    func substring(from start: Int, to end: Int) -> String {
+      return String(_storage: self._storage.slice(from: start, to: end))
+    }
+    func substring(to end: Int) -> String {
+      return self.substring(from: 0, to: end)
+    }
+    func substring(from start: Int) -> String {
+      return self.substring(from: start, to: self.length + 1 /* index of NUL terminator */)
     }
     var isEmpty: Bool {
         return self.length == 0
@@ -111,12 +120,6 @@ func +(lhs: String, rhs: String) -> String {
   var copy = lhs.copy()
   copy.append(rhs)
   return copy
-}
-
-func +(lhs: *Int8, rhs: *Int8) -> String {
-  var str = String(cString: lhs)
-  str.append(rhs)
-  return str
 }
 
 func fatalError(_ message: String) {
