@@ -13,6 +13,17 @@ type String {
         self._storage = ByteArray(cString, length: length)
         self._storage.append(0)
     }
+    /// Creates a string by repeating a character for a certain length.
+    /// - parameter count: The number of times to repeat the character.
+    init(repeating string: String, count: Int) {
+        self._storage = ByteArray(capacity: (string.length * count) + 1)
+        for var i = 0; i < count; i += 1 {
+            self._storage.insert(string.cString, 
+                                 length: string.length,
+                                 at: self._storage.length)
+        }
+        self._storage.append(0)
+    }
     init() {
         self._storage = ByteArray(capacity: 256)
         self._storage.append(0)
