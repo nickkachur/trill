@@ -79,6 +79,14 @@ type String {
     func copy() -> String {
         return String(_storage: self._storage.copy())
     }
+    func reversed() -> String {
+        var storage = ByteArray(capacity: self.length + 1)
+        for var i = self.length - 1; i >= 0; i -= 1 {
+            storage.append(self[i])
+        }
+        storage.append(0)
+        return String(_storage: storage)
+    }
     subscript(_ index: Int) -> Int8 {
         return self._storage[index]
     }
